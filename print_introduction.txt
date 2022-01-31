@@ -1,0 +1,5 @@
+   ===== Welcome to CRM Application =====
+    [S]how: Show all users inf
+    [A]dd: Add new use
+    [Q]uit: Quit The Applicatio
+    =====================================

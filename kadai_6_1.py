@@ -129,45 +129,45 @@ def edit_user(name, age):
 
 def main():
     init_db()
+
+    with open('print_introduction.txt', encoding="utf-8") as introduction:
+
+        print(introduction.read())
+
     while True:
         command = str(input('どんな操作')).upper()
         if command == 'A':
             print('A')
-            name = str(input("名前を入力してください。> "))
-            age = int(input("年齢を入力して下さい > "))
-            add_user(name, age)
+            Name = str(input("名前を入力してください。> "))
+            Age = int(input("年齢を入力して下さい > "))
+            add_user(Name, Age)
 
         elif command == 'S':
             print('S')
             all_userinfo()
+
         elif command == 'F':
-            name = str(input("検索する名前を入力してください。> "))
+            Name = str(input("検索する名前を入力してください。> "))
             print('F')
-            users_find(name)
+            users_find(Name)
+
         elif command == 'Q':
             print('Bye!')
             break
+
         elif command == 'D':
-            name = str(input("削除する名前を入力してください。> "))
+            Name = str(input("削除する名前を入力してください。> "))
             print('D')
-            delete_user(name)
+            delete_user(Name)
+
         elif command == 'E':
-            name = str(input("編集する人を入力してください。 > "))
-            age = input("age? > ")
-            edit_user(name, age)
+            Name = str(input("編集する人を入力してください。 > "))
+            Age = input("age? > ")
+            edit_user(Name, Age)
+
         else:
             print(f"{command}: command not found")
 
 
 if __name__ == '__main__':
     main()
-
-print(
-    """
-    ===== Welcome to CRM Application =====
-    [S]how: Show all users inf
-    [A]dd: Add new use
-    [Q]uit: Quit The Applicatio
-    =====================================
-    """
-)
