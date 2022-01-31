@@ -1,0 +1,1 @@
+INSERT INTO users (username, age) VALUES(%(name)s, %(age)s);
