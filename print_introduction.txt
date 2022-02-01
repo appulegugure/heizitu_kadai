@@ -1,5 +1,8 @@
-   ===== Welcome to CRM Application =====
+   ===== Welcome to CRM Application =================
     [S]how: Show all users inf
-    [A]dd: Add new use
-    [Q]uit: Quit The Applicatio
-    =====================================
+    [A]dd: Add new user
+    [Q]uit: Quit The Application
+    [F]ind: Find user information
+    [E]dit: Edit already exist user in users table
+    [D]elete: Delete user in users table
+   ==================================================
