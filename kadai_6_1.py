@@ -5,13 +5,13 @@ import psycopg2
 load_dotenv()
 
 
-def init_db():
+def init_db(conn, cur):
     # DBの情報を取得
-    dsn = os.environ.get('DATABASE_URL')
-    print(dsn)
+    # dsn = os.environ.get('DATABASE_URL')
+    # print(dsn)
     # DBに接続(コネクションを貼る)
-    conn = psycopg2.connect(dsn)
-    cur = conn.cursor()
+    # conn = psycopg2.connect(dsn)
+    # cur = conn.cursor()
     # SQLを用意
     with open('sql_dir/schema.sql', encoding="utf-8") as f:
         sql = f.read()
@@ -128,13 +128,13 @@ def edit_user(name, age, conn, cur):
 
 
 def main():
-    init_db()
     # databaseのURLを取得
     dsn = os.environ.get('DATABASE_URL')
     # DBに接続(コネクションを貼る)
     conn = psycopg2.connect(dsn)
-    # cur = conn.cursor()
-
+    cur = conn.cursor()
+    
+    init_db(conn, cur)
     with open('print_introduction.txt', encoding="utf-8") as introduction:
 
         print(introduction.read())
@@ -146,20 +146,20 @@ def main():
             print('A')
             Name = str(input("名前を入力してください。> "))
             Age = int(input("年齢を入力して下さい > "))
-            cur = conn.cursor()
+            # cur = conn.cursor()
             add_user(Name, Age, conn, cur)
 
         elif command == 'S':
 
             print('S')
-            cur = conn.cursor()
+            # cur = conn.cursor()
             all_userinfo(conn, cur)
 
         elif command == 'F':
 
             Name = str(input("検索する名前を入力してください。> "))
             print('F')
-            cur = conn.cursor()
+            # cur = conn.cursor()
             users_find(Name, conn, cur)
 
         elif command == 'Q':
@@ -170,13 +170,13 @@ def main():
         elif command == 'D':
             Name = str(input("削除する名前を入力してください。> "))
             print('D')
-            cur = conn.cursor()
+            # cur = conn.cursor()
             delete_user(Name, conn, cur)
 
         elif command == 'E':
             Name = str(input("編集する人を入力してください。 > "))
             Age = input("age? > ")
-            cur = conn.cursor()
+            # cur = conn.cursor()
             edit_user(Name, Age, conn, cur)
 
         else:
