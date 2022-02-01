@@ -6,139 +6,97 @@ load_dotenv()
 
 
 def init_db(conn, cur):
-    # DBの情報を取得
-    # dsn = os.environ.get('DATABASE_URL')
-    # print(dsn)
-    # DBに接続(コネクションを貼る)
-    # conn = psycopg2.connect(dsn)
-    # cur = conn.cursor()
-    # SQLを用意
     with open('sql_dir/schema.sql', encoding="utf-8") as f:
         sql = f.read()
         # SQLを実行
         cur.execute(sql)
+
     # 実行状態を保存
     conn.commit()
-    # コネクションを閉じる。
-    # conn.close()
+    
+    return print("CREATE TABLE")
 
 
 def all_userinfo(conn, cur):
-    # DBの情報を取得
-    # dsn = os.environ.get('DATABASE_URL')
-    # DBに接続(コネクションを貼る)
-    # conn = psycopg2.connect(dsn)
-    # cur = conn.cursor()
-    # SQLを用意
     with open('sql_dir/all_userinfo.sql', encoding="utf-8") as f:
         sql = f.read()
         # SQLを実行
         cur.execute(sql)
 
-        fetch_you = cur.fetchall()
+        fetch_user = cur.fetchall()
     # 実行状態を保存
     conn.commit()
-    # コネクションを閉じる。
-    # conn.close()
-    print('\n'.join([f"Name: {i[0]} Age: {i[1]}" for i in fetch_you]))
+
+    return print('\n'.join([f"Name: {i[0]} Age: {i[1]}" for i in fetch_user]))
 
 
 def add_user(name, age, conn, cur):
-    # DBの情報を取得
-    # dsn = os.environ.get('DATABASE_URL')
-    # DBに接続(コネクションを貼る)
-    # conn = psycopg2.connect(dsn)
-    # cur = conn.cursor()
-    # SQLを用意
     with open('sql_dir/insert.sql', encoding="utf-8") as f:
         sql = f.read()
         # SQLを実行
         cur.execute(sql, {'name': name, 'age': age})
+
     # 実行状態を保存
     conn.commit()
-    # コネクションを閉じる。
-    # conn.close()
 
-    print(f"add new user {name}")
+    return print(f"add new user {name}")
 
 
 def users_find(name, conn, cur):
-    # DBの情報を取得
-    # dsn = os.environ.get('DATABASE_URL')
-    # DBに接続(コネクションを貼る)
-    # conn = psycopg2.connect(dsn)
-    # cur = conn.cursor()
-    # SQLを用意
-
     with open('sql_dir/user_find.sql', encoding="utf-8") as f:
         sql = f.read()
         # SQLを実行
         cur.execute(sql, {'name': name})
-    """     
-        #test1,
-        cur.execute(f"SELECT * FROM users WHERE username = 'ER';")
-        
-        #test2,
-        cur.execute(f"SELECT * FROM users WHERE username = '{name}';")
-    """
 
-    fetch_you = cur.fetchall()
+    # fetch
+    fetch_user = cur.fetchall()
     # 実行状態を保存
     conn.commit()
-    # コネクションを閉じる。
-    # conn.close()
-    print('\n'.join([f"Name: {i[0]} Age: {i[1]}" for i in fetch_you]))
+
+    return print('\n'.join([f"Name: {i[0]} Age: {i[1]}" for i in fetch_user]))
 
 
 def delete_user(name, conn, cur):
-    # DBの情報を取得
-    # dsn = os.environ.get('DATABASE_URL')
-    # DBに接続(コネクションを貼る)
-    # conn = psycopg2.connect(dsn)
-    # cur = conn.cursor()
-    # SQLを用意
     with open('sql_dir/user_delete.sql', encoding="utf-8") as f:
         sql = f.read()
         # SQLを実行
         cur.execute(sql, {'name': name})
+
     # 実行状態を保存
     conn.commit()
-    # コネクションを閉じる。
-    # conn.close()
 
-    print(f"delete  user {name}")
+    return print(f"delete  user {name}")
 
 
 def edit_user(name, age, conn, cur):
-    # dsn = os.environ.get('DATABASE_URL')
-    # DBに接続(コネクションを貼る)
-    # conn = psycopg2.connect(dsn)
-    # cur = conn.cursor()
-    # SQLを用意
     with open('sql_dir/edit_user.sql', encoding="utf-8") as f:
         sql = f.read()
         # SQLを実行
         cur.execute(sql, {'name': name, 'age': age})
+
     # 実行状態を保存
     conn.commit()
-    # コネクションを閉じる。
-    # conn.close()
 
-    print(f"edit user finish")
+    return print(f"edit user finish")
 
 
 def main():
     # databaseのURLを取得
     dsn = os.environ.get('DATABASE_URL')
+
     # DBに接続(コネクションを貼る)
     conn = psycopg2.connect(dsn)
     cur = conn.cursor()
-    
+
+    # DB CREATE
     init_db(conn, cur)
+
+    # introduction.txt OPEN
     with open('print_introduction.txt', encoding="utf-8") as introduction:
 
         print(introduction.read())
 
+    # DB OPERATION START POINT
     while True:
         command = str(input('どんな操作')).upper()
         if command == 'A':
