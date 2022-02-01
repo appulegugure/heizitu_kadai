@@ -89,10 +89,10 @@ def main():
 
     # DBに接続(コネクションを貼る)
     conn = psycopg2.connect(dsn)
-    cur = conn.cursor()
+    # cur = conn.cursor()
 
     # DB CREATE
-    init_db(conn, cur)
+    #init_db(conn, cur)
 
     # introduction.txt OPEN
     with open('print_introduction.txt', encoding="utf-8") as introduction:
@@ -101,6 +101,8 @@ def main():
 
     # DB OPERATION START POINT
     while True:
+        cur = conn.cursor()
+        init_db(conn, cur)
         command = str(input('\nChoose a operation? > ')).upper()
         if command == 'A':
 
@@ -116,8 +118,9 @@ def main():
                 add_user(name, age, conn, cur)
             except psycopg2.errors.UniqueViolation:
                 print(f"Duplicated user name: {name}")
+                cur.close()
             else:
-                print(f"Add new user: {name}")
+                pass
             finally:
                 continue
 
