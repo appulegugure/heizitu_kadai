@@ -1,4 +1,4 @@
 UPDATE users
-SET age = %(age)s
+SET username = %(editname)s, age = %(editage)s
 WHERE username = %(name)s
 ;

@@ -53,7 +53,10 @@ def users_find(name, conn, cur):
     # 実行状態を保存
     conn.commit()
 
-    return print('\n'.join([f"Name: {i[0]} Age: {i[1]}" for i in fetch_user]))
+    if len(fetch_user) == 0:
+        return print(f"Sorry, {name} is not found")
+    else:
+        return print('\n'.join([f"Name: {i[0]} Age: {i[1]}" for i in fetch_user]))
 
 
 def delete_user(name, conn, cur):
@@ -68,16 +71,16 @@ def delete_user(name, conn, cur):
     return print(f"delete  user {name}")
 
 
-def edit_user(name, age, conn, cur):
+def edit_user(name, edit_name, edit_age, conn, cur):
     with open('sql_dir/edit_user.sql', encoding="utf-8") as f:
         sql = f.read()
         # SQLを実行
-        cur.execute(sql, {'name': name, 'age': age})
+        cur.execute(sql, {'name': name, 'editname': edit_name, 'editage': edit_age})
 
     # 実行状態を保存
     conn.commit()
 
-    return print(f"edit user finish")
+    return print(f"update user {edit_name}")
 
 
 def main():
@@ -133,9 +136,10 @@ def main():
 
         elif command == 'E':
             Name = str(input("編集する人を入力してください。 > "))
-            Age = input("age? > ")
+            edit_name = str(input("name? > "))
+            edit_age = input("age? > ")
             # cur = conn.cursor()
-            edit_user(Name, Age, conn, cur)
+            edit_user(Name, edit_name, edit_age, conn, cur)
 
         else:
             print(f"{command}: command not found")
