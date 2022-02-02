@@ -12,9 +12,9 @@ def requests_toppage():
             print("title :" + response2["title"])
             print("Link :" + response2["url"])
 
-            time.sleep(1)
         except KeyError:
             pass
+        time.sleep(1)
     return 0
 
 
